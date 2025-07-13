@@ -3,159 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best Wallpapers for Android - All in One Page</title>
+    <title>Best God Wallpapers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* CSS में कोई बदलाव नहीं, यह बिल्कुल सही है */
         body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; text-align: center; }
-        h1 { color: #333; margin-top: 20px; margin-bottom: 30px; }
-        .navigation { display: flex; justify-content: center; align-items: center; margin-top: 20px; margin-bottom: 20px; padding: 10px 0; background-color: #ddd; }
-        .navigation a { margin: 0 10px; text-decoration: none; font-size: 18px; color: #333; cursor: pointer; padding: 5px 10px; border-radius: 4px; transition: background-color 0.3s; }
-        .navigation a:hover { background-color: #ccc; }
-        .navigation a.active { background-color: #007bff; color: white; font-weight: bold; }
-        .wallpaper-gallery { padding: 0 20px; }
-        .wallpaper-container { display: inline-block; margin: 15px; border: 1px solid #ccc; padding: 15px; background-color: #fff; box-shadow: 3px 3px 8px #888888; vertical-align: top; max-width: 300px; box-sizing: border-box; text-align: left; }
-        .wallpaper-container img { max-width: 100%; height: auto; display: block; margin-bottom: 15px; border-radius: 5px; }
-        .download-button { display: block; width: 100%; padding: 12px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s ease; }
+        #menu-toggle-btn { position: fixed; top: 15px; left: 15px; z-index: 1001; font-size: 24px; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        #main-menu { position: fixed; top: 0; left: 0; width: 280px; height: 100%; background-color: #2c3e50; z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease-in-out; padding-top: 60px; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
+        #main-menu.menu-open { transform: translateX(0); }
+        #close-menu-btn { position: absolute; top: 15px; right: 20px; font-size: 30px; color: white; background: none; border: none; cursor: pointer; }
+        #main-menu ul { list-style: none; padding: 0; margin: 0; }
+        #main-menu li a { display: block; padding: 15px 20px; color: white; text-decoration: none; font-size: 18px; border-bottom: 1px solid #34495e; transition: background-color 0.2s; text-align: left; cursor: pointer; }
+        #main-menu li a:hover { background-color: #34495e; }
+        h1 { color: #333; margin-top: 20px; margin-bottom: 30px; padding-top: 50px; }
+        .wallpaper-gallery { display: grid; grid-template-columns: repeat(10, 1fr); gap: 15px; padding: 20px; }
+        @media (max-width: 1600px) { .wallpaper-gallery { grid-template-columns: repeat(8, 1fr); } }
+        @media (max-width: 1200px) { .wallpaper-gallery { grid-template-columns: repeat(5, 1fr); } }
+        @media (max-width: 992px) { .wallpaper-gallery { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 768px) { .wallpaper-gallery { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 480px) { .wallpaper-gallery { grid-template-columns: repeat(2, 1fr); } }
+        .wallpaper-container { border: 1px solid #ccc; padding: 10px; background-color: #fff; box-shadow: 3px 3px 8px #888888; text-align: left; }
+        .wallpaper-container.hidden { display: none; }
+        .wallpaper-container img { max-width: 100%; height: auto; display: block; margin-bottom: 10px; border-radius: 5px; }
+        .action-buttons { display: flex; justify-content: space-around; align-items: center; margin-bottom: 10px; }
+        .action-buttons button { background: none; border: none; font-size: 16px; cursor: pointer; color: #555; transition: color 0.2s, transform 0.2s; padding: 5px; }
+        .action-buttons button:hover { color: #000; transform: scale(1.1); }
+        .like-btn.liked i { color: red; font-weight: 900; }
+        .like-count { font-size: 14px; margin-left: 4px; }
+        .download-button { display: block; width: 100%; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; }
         .download-button:hover { background-color: #0056b3; }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
+        #load-more-btn { padding: 12px 30px; font-size: 16px; font-weight: bold; color: white; background-color: #28a745; border: none; border-radius: 5px; cursor: pointer; margin: 30px auto; display: block; transition: background-color 0.3s; }
+        #load-more-btn.hidden { display: none; }
         footer { margin-top: 20px; padding: 20px; background-color: #333; color: white; font-size: 14px; }
     </style>
 </head>
 <body>
-    <h1 id="page-title">Best Wallpapers for Android - Page 1</h1>
+    <button id="menu-toggle-btn"><i class="fa-solid fa-bars"></i></button>
+
+    <nav id="main-menu">
+        <button id="close-menu-btn">×</button>
+        <ul>
+            <li><a class="category-link" data-category="all-god">All God Wallpaper</a></li>
+            <li><a class="category-link" data-category="krishna">Krishna Wallpaper</a></li>
+            <li><a class="category-link" data-category="shiv">Shiv Wallpaper</a></li>
+            <li><a class="category-link" data-category="ganesh">Ganesh Wallpaper</a></li>
+            <li><a class="category-link" data-category="hanuman">Hanuman Wallpaper</a></li>
+        </ul>
+    </nav>
+
+    <h1 id="page-title">Best Wallpapers for Android</h1>
 
     <div id="main-content">
-        <!-- ===== पेज 1 का कंटेंट (वॉलपेपर 1-10) ===== -->
-        <div id="page1" class="page-content active">
-            <div class="wallpaper-gallery">
-                <div class="wallpaper-container"><img src="image001.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image001.jpg.jpg" data-extra-link="https://otieu.com/4/9549433">Download</button></div>
-                <div class="wallpaper-container"><img src="image002.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image002.jpg.jpg" data-extra-link="https://otieu.com/4/9549432">Download</button></div>
-                <div class="wallpaper-container"><img src="image003.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image003.jpg.jpg" data-extra-link="https://otieu.com/4/9381063">Download</button></div>
-                <div class="wallpaper-container"><img src="image004.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image004.jpg.jpg" data-extra-link="https://otieu.com/4/9549431">Download</button></div>
-                <div class="wallpaper-container"><img src="image005.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image005.jpg.jpg" data-extra-link="https://otieu.com/4/9549430">Download</button></div>
-                <div class="wallpaper-container"><img src="image006.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image006.jpg.jpg" data-extra-link="https://otieu.com/4/9549429">Download</button></div>
-                <div class="wallpaper-container"><img src="image007.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image007.jpg.jpg" data-extra-link="https://otieu.com/4/9408392">Download</button></div>
-                <div class="wallpaper-container"><img src="image008.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image008.jpg.jpg" data-extra-link="https://otieu.com/4/9534884">Download</button></div>
-                <div class="wallpaper-container"><img src="image009.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image009.jpg.jpg" data-extra-link="https://otieu.com/4/9534885">Download</button></div>
-                <div class="wallpaper-container"><img src="image010.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image010.jpg.jpg" data-extra-link="https://otieu.com/4/9534886">Download</button></div>
-            </div>
-        </div>
-
-        <!-- ===== पेज 2 का कंटेंट (वॉलपेपर 11-20) ===== -->
-        <div id="page2" class="page-content">
-            <div class="wallpaper-gallery">
-                <div class="wallpaper-container"><img src="image011.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image011.jpg.jpg" data-extra-link="https://otieu.com/4/9549433">Download</button></div>
-                <div class="wallpaper-container"><img src="image012.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image012.jpg.jpg" data-extra-link="https://otieu.com/4/9549432">Download</button></div>
-                <div class="wallpaper-container"><img src="image013.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image013.jpg.jpg" data-extra-link="https://otieu.com/4/9381063">Download</button></div>
-                <div class="wallpaper-container"><img src="image014.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image014.jpg.jpg" data-extra-link="https://otieu.com/4/9549431">Download</button></div>
-                <div class="wallpaper-container"><img src="image015.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image015.jpg.jpg" data-extra-link="https://otieu.com/4/9549430">Download</button></div>
-                <div class="wallpaper-container"><img src="image016.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image016.jpg.jpg" data-extra-link="https://otieu.com/4/9549429">Download</button></div>
-                <div class="wallpaper-container"><img src="image017.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image017.jpg.jpg" data-extra-link="https://otieu.com/4/9408392">Download</button></div>
-                <div class="wallpaper-container"><img src="image018.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image018.jpg.jpg" data-extra-link="https://otieu.com/4/9534884">Download</button></div>
-                <div class="wallpaper-container"><img src="image019.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image019.jpg.jpg" data-extra-link="https://otieu.com/4/9534885">Download</button></div>
-                <div class="wallpaper-container"><img src="image020.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image020.jpg.jpg" data-extra-link="https://otieu.com/4/9534886">Download</button></div>
-            </div>
-        </div>
-
-        <!-- ===== पेज 3 का कंटेंट (वॉलपेपर 21-30) ===== -->
-        <div id="page3" class="page-content">
-            <div class="wallpaper-gallery">
-                <div class="wallpaper-container"><img src="image021.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image021.jpg.jpg" data-extra-link="https://otieu.com/4/9549433">Download</button></div>
-                <div class="wallpaper-container"><img src="image022.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image022.jpg.jpg" data-extra-link="https://otieu.com/4/9549432">Download</button></div>
-                <div class="wallpaper-container"><img src="image023.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image023.jpg.jpg" data-extra-link="https://otieu.com/4/9381063">Download</button></div>
-                <div class="wallpaper-container"><img src="image024.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image024.jpg.jpg" data-extra-link="https://otieu.com/4/9549431">Download</button></div>
-                <div class="wallpaper-container"><img src="image025.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image025.jpg.jpg" data-extra-link="https://otieu.com/4/9549430">Download</button></div>
-                <div class="wallpaper-container"><img src="image026.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image026.jpg.jpg" data-extra-link="https://otieu.com/4/9549429">Download</button></div>
-                <div class="wallpaper-container"><img src="image027.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image027.jpg.jpg" data-extra-link="https://otieu.com/4/9408392">Download</button></div>
-                <div class="wallpaper-container"><img src="image028.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image028.jpg.jpg" data-extra-link="https://otieu.com/4/9534884">Download</button></div>
-                <div class="wallpaper-container"><img src="image029.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image029.jpg.jpg" data-extra-link="https://otieu.com/4/9534885">Download</button></div>
-                <div class="wallpaper-container"><img src="image030.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image030.jpg.jpg" data-extra-link="https://otieu.com/4/9534886">Download</button></div>
-            </div>
-        </div>
-        
-        <!-- ===== पेज 4 का कंटेंट (वॉलपेपर 31-40) ===== -->
-        <div id="page4" class="page-content">
-            <div class="wallpaper-gallery">
-                <div class="wallpaper-container"><img src="image031.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image031.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image032.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image032.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image033.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image033.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image034.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image034.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image035.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image035.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image036.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image036.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image037.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image037.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image038.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image038.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image039.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image039.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-                <div class="wallpaper-container"><img src="image040.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image040.jpg.jpg" data-extra-link="https://www.example.com">Download</button></div>
-            </div>
-        </div>
-
-        <!-- ===== पेज 5 का कंटेंट (वॉलपेपर 41-50) (आपके दिए गए लिंक के साथ अपडेट किया गया) ===== -->
-        <div id="page5" class="page-content">
-            <div class="wallpaper-gallery">
-                <div class="wallpaper-container"><img src="image041.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image041.jpg.jpg" data-extra-link="https://otieu.com/4/9549433">Download</button></div>
-                <div class="wallpaper-container"><img src="image042.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image042.jpg.jpg" data-extra-link="https://otieu.com/4/9549432">Download</button></div>
-                <div class="wallpaper-container"><img src="image043.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image043.jpg.jpg" data-extra-link="https://otieu.com/4/9381063">Download</button></div>
-                <div class="wallpaper-container"><img src="image044.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image044.jpg.jpg" data-extra-link="https://otieu.com/4/9549431">Download</button></div>
-                <div class="wallpaper-container"><img src="image045.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image045.jpg.jpg" data-extra-link="https://otieu.com/4/9549430">Download</button></div>
-                <div class="wallpaper-container"><img src="image046.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image046.jpg.jpg" data-extra-link="https://otieu.com/4/9549429">Download</button></div>
-                <div class="wallpaper-container"><img src="image047.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image047.jpg.jpg" data-extra-link="https://otieu.com/4/9408392">Download</button></div>
-                <div class="wallpaper-container"><img src="image048.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image048.jpg.jpg" data-extra-link="https://otieu.com/4/9534884">Download</button></div>
-                <div class="wallpaper-container"><img src="image049.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image049.jpg.jpg" data-extra-link="https://otieu.com/4/9534885">Download</button></div>
-                <div class="wallpaper-container"><img src="image050.jpg.jpg" alt="Wallpaper"><button class="download-button" data-image-url="image050.jpg.jpg" data-extra-link="https://otieu.com/4/9534886">Download</button></div>
-            </div>
+        <div class="wallpaper-gallery">
+            <!-- वॉलपेपर HTML यहाँ जावास्क्रिप्ट से जनरेट होगा -->
         </div>
     </div>
-
-    <!-- नेविगेशन बार -->
-    <div class="navigation">
-        <a data-page="1" class="nav-link active">Page 1</a>
-        <a data-page="2" class="nav-link">Page 2</a>
-        <a data-page="3" class="nav-link">Page 3</a>
-        <a data-page="4" class="nav-link">Page 4</a>
-        <a data-page="5" class="nav-link">Page 5</a>
-    </div>
+    
+    <button id="load-more-btn">Load More</button>
 
     <footer>
         <p>© 2025 Your Wallpaper Site. All rights reserved.</p>
     </footer>
 
-    <!-- जावास्क्रिप्ट -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pageContents = document.querySelectorAll('.page-content');
+            const menuToggleBtn = document.getElementById('menu-toggle-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mainMenu = document.getElementById('main-menu');
+            menuToggleBtn.addEventListener('click', () => mainMenu.classList.add('menu-open'));
+            closeMenuBtn.addEventListener('click', () => mainMenu.classList.remove('menu-open'));
+
+            const gallery = document.querySelector('.wallpaper-gallery');
+            const loadMoreBtn = document.getElementById('load-more-btn');
             const pageTitle = document.getElementById('page-title');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    const targetPageNumber = this.getAttribute('data-page');
-                    const targetPageId = 'page' + targetPageNumber;
-                    pageContents.forEach(page => page.classList.remove('active'));
-                    navLinks.forEach(nav => nav.classList.remove('active'));
-                    document.getElementById(targetPageId).classList.add('active');
-                    this.classList.add('active');
-                    pageTitle.textContent = `Best Wallpapers for Android - Page ${targetPageNumber}`;
-                    window.scrollTo(0, 0);
+            const itemsPerLoad = 30;
+
+            const wallpaperData = [
+                { id: 'image001', cat: 'krishna all-god' }, { id: 'image002', cat: 'krishna all-god' },
+                { id: 'image003', cat: 'krishna all-god' }, { id: 'image004', cat: 'krishna all-god' },
+                { id: 'image005', cat: 'krishna all-god' }, { id: 'image006', cat: 'krishna all-god' },
+                { id: 'image007', cat: 'krishna all-god' }, { id: 'image008', cat: 'krishna all-god' },
+                { id: 'image009', cat: 'krishna all-god' }, { id: 'image010', cat: 'krishna all-god' },
+                { id: 'image011', cat: 'shiv all-god' }, { id: 'image012', cat: 'shiv all-god' },
+                { id: 'image013', cat: 'shiv all-god' }, { id: 'image014', cat: 'shiv all-god' },
+                { id: 'image015', cat: 'shiv all-god' }, { id: 'image016', cat: 'shiv all-god' },
+                { id: 'image017', cat: 'shiv all-god' }, { id: 'image018', cat: 'shiv all-god' },
+                { id: 'image019', cat: 'shiv all-god' }, { id: 'image020', cat: 'shiv all-god' },
+                { id: 'image021', cat: 'ganesh all-god' }, { id: 'image022', cat: 'ganesh all-god' },
+                { id: 'image023', cat: 'ganesh all-god' }, { id: 'image024', cat: 'ganesh all-god' },
+                { id: 'image025', cat: 'ganesh all-god' }, { id: 'image026', cat: 'hanuman all-god' },
+                { id: 'image027', cat: 'hanuman all-god' }, { id: 'image028', cat: 'hanuman all-god' },
+                { id: 'image029', cat: 'hanuman all-god' }, { id: 'image030', cat: 'hanuman all-god' },
+                { id: 'image031', cat: 'all-god' }, { id: 'image032', cat: 'all-god' },
+                { id: 'image033', cat: 'all-god' }, { id: 'image034', cat: 'all-god' },
+                { id: 'image035', cat: 'all-god' }, { id: 'image036', cat: 'all-god' },
+                { id: 'image037', cat: 'all-god' }, { id: 'image038', cat: 'all-god' },
+                { id: 'image039', cat: 'all-god' }, { id: 'image040', cat: 'all-god' },
+                { id: 'image041', cat: 'all-god' }, { id: 'image042', cat: 'all-god' },
+                { id: 'image043', cat: 'all-god' }, { id: 'image044', cat: 'all-god' },
+                { id: 'image045', cat: 'all-god' }, { id: 'image046', cat: 'all-god' },
+                { id: 'image047', cat: 'all-god' }, { id: 'image048', cat: 'all-god' },
+                { id: 'image049', cat: 'all-god' }, { id: 'image050', cat: 'all-god' }
+            ];
+
+            let allWallpaperElements = [];
+            let activeCategory = 'all-god';
+            let visibleCount = 0;
+
+            function createWallpaperElement(data, iteration) {
+                const uniqueId = `${data.id}-${iteration}`;
+                const imageUrl = `${data.id}.jpg.jpg`;
+                const container = document.createElement('div');
+                container.className = 'wallpaper-container';
+                container.dataset.id = uniqueId;
+                container.dataset.category = data.cat;
+                container.innerHTML = `
+                    <img src="${imageUrl}" alt="Wallpaper" loading="lazy">
+                    <div class="action-buttons">
+                        <button class="like-btn"><i class="fa-regular fa-heart"></i><span class="like-count">0</span></button>
+                        <button class="share-btn"><i class="fa-solid fa-share-nodes"></i></button>
+                        <button class="comment-btn"><i class="fa-regular fa-comment"></i></button>
+                    </div>
+                    <a href="#" class="download-button" data-image-url="${imageUrl}">Download</a>`;
+                return container;
+            }
+
+            function generateWallpapers() {
+                const totalWallpapers = 330;
+                for (let i = 0; i < totalWallpapers; i++) {
+                    const data = wallpaperData[i % wallpaperData.length];
+                    const iteration = Math.floor(i / wallpaperData.length) + 1;
+                    const el = createWallpaperElement(data, iteration);
+                    gallery.appendChild(el);
+                }
+                allWallpaperElements = Array.from(gallery.querySelectorAll('.wallpaper-container'));
+            }
+
+            function filterAndDisplayWallpapers() {
+                visibleCount = 0;
+                let itemsShown = 0;
+                const filteredWallpapers = allWallpaperElements.filter(w => activeCategory === 'all-god' || w.dataset.category.includes(activeCategory));
+                
+                allWallpaperElements.forEach(w => w.classList.add('hidden'));
+
+                filteredWallpapers.forEach(w => {
+                    if (itemsShown < itemsPerLoad) {
+                        w.classList.remove('hidden');
+                        itemsShown++;
+                    }
+                });
+                
+                visibleCount = itemsShown;
+                loadMoreBtn.classList.toggle('hidden', visibleCount >= filteredWallpapers.length);
+            }
+
+            loadMoreBtn.addEventListener('click', () => {
+                let itemsShown = 0;
+                const filteredWallpapers = allWallpaperElements.filter(w => activeCategory === 'all-god' || w.dataset.category.includes(activeCategory));
+
+                filteredWallpapers.forEach(w => {
+                    if (w.classList.contains('hidden') && itemsShown < itemsPerLoad) {
+                        w.classList.remove('hidden');
+                        itemsShown++;
+                    }
+                });
+                
+                visibleCount += itemsShown;
+                loadMoreBtn.classList.toggle('hidden', visibleCount >= filteredWallpapers.length);
+            });
+
+            document.querySelectorAll('.category-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    activeCategory = e.target.dataset.category;
+                    pageTitle.textContent = e.target.textContent;
+                    mainMenu.classList.remove('menu-open');
+                    filterAndDisplayWallpapers();
                 });
             });
-        });
-        document.getElementById('main-content').addEventListener('click', function(event) {
-            if (event.target && event.target.classList.contains('download-button')) {
-                const button = event.target;
-                const imageUrl = button.getAttribute('data-image-url');
-                const extraLink = button.getAttribute('data-extra-link');
-                if (imageUrl) {
-                    const link = document.createElement('a');
-                    link.href = imageUrl;
-                    link.download = imageUrl.substring(imageUrl.lastIndexOf('/') + 1) || 'wallpaper.jpg';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+
+            gallery.addEventListener('click', function(event) {
+                const target = event.target.closest('button, a.download-button');
+                if (!target) return;
+                
+                const container = target.closest('.wallpaper-container');
+                if (!container) return;
+
+                if (target.matches('a.download-button')) {
+                    event.preventDefault();
+                    const imageUrl = target.dataset.imageUrl;
+                    if (imageUrl) {
+                        const encodedImageUrl = encodeURIComponent(imageUrl);
+                        window.open(`timer.html?image=${encodedImageUrl}`, '_blank');
+                    }
                 }
-                if (extraLink) {
-                    window.open(extraLink, '_blank');
-                }
-            }
+                // ... (Like, Share, Comment का लॉजिक यहाँ आएगा)
+            });
+
+            generateWallpapers();
+            filterAndDisplayWallpapers();
         });
     </script>
 </body>
