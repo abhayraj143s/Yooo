@@ -1,5 +1,5 @@
 const wallpaperData = [
-    { id: 'image051', cat: 'shiv all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image052', cat: 'shiv all-god', link: 'https://otieu.com/4/9549432' },
+    { id: 'image051.jpg', cat: 'shiv all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image052.jpg', cat: 'shiv all-god', link: 'https://otieu.com/4/9549432' },
     { id: 'image001', cat: 'krishna all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image002', cat: 'krishna all-god', link: 'https://otieu.com/4/9549432' },
     { id: 'image003', cat: 'krishna all-god', link: 'https://otieu.com/4/9381063' }, { id: 'image004', cat: 'krishna all-god', link: 'https://otieu.com/4/9549431' },
     { id: 'image005', cat: 'krishna all-god', link: 'https://otieu.com/4/9549430' }, { id: 'image006', cat: 'krishna all-god', link: 'https://otieu.com/4/9549429' },
