@@ -3,208 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Best God Wallpapers</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Preparing Download...</title>
     <style>
-        body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; text-align: center; }
-        #menu-toggle-btn { position: fixed; top: 15px; left: 15px; z-index: 1001; font-size: 24px; background-color: rgba(255, 255, 255, 0.8); border: 1px solid #ccc; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        #main-menu { position: fixed; top: 0; left: 0; width: 280px; height: 100%; background-color: #2c3e50; z-index: 1000; transform: translateX(-100%); transition: transform 0.3s ease-in-out; padding-top: 60px; box-shadow: 2px 0 5px rgba(0,0,0,0.5); }
-        #main-menu.menu-open { transform: translateX(0); }
-        #close-menu-btn { position: absolute; top: 15px; right: 20px; font-size: 30px; color: white; background: none; border: none; cursor: pointer; }
-        #main-menu ul { list-style: none; padding: 0; margin: 0; }
-        #main-menu li a { display: block; padding: 15px 20px; color: white; text-decoration: none; font-size: 18px; border-bottom: 1px solid #34495e; transition: background-color 0.2s; text-align: left; cursor: pointer; }
-        #main-menu li a:hover { background-color: #34495e; }
-        h1 { color: #333; margin-top: 20px; margin-bottom: 30px; padding-top: 50px; }
-        .wallpaper-gallery { display: grid; grid-template-columns: repeat(10, 1fr); gap: 15px; padding: 20px; }
-        @media (max-width: 1600px) { .wallpaper-gallery { grid-template-columns: repeat(8, 1fr); } }
-        @media (max-width: 1200px) { .wallpaper-gallery { grid-template-columns: repeat(5, 1fr); } }
-        @media (max-width: 992px) { .wallpaper-gallery { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 768px) { .wallpaper-gallery { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 480px) { .wallpaper-gallery { grid-template-columns: repeat(2, 1fr); } }
-        .wallpaper-container { border: 1px solid #ccc; padding: 10px; background-color: #fff; box-shadow: 3px 3px 8px #888888; text-align: left; }
-        .wallpaper-container.hidden { display: none; }
-        .wallpaper-container img { max-width: 100%; height: auto; display: block; margin-bottom: 10px; border-radius: 5px; }
-        .action-buttons { display: flex; justify-content: space-around; align-items: center; margin-bottom: 10px; }
-        .action-buttons button { background: none; border: none; font-size: 16px; cursor: pointer; color: #555; transition: color 0.2s, transform 0.2s; padding: 5px; }
-        .action-buttons button:hover { color: #000; transform: scale(1.1); }
-        .like-btn.liked i { color: red; font-weight: 900; }
-        .like-count { font-size: 14px; margin-left: 4px; }
-        .download-button { display: block; width: 100%; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; }
-        .download-button:hover { background-color: #0056b3; }
-        #load-more-btn { padding: 12px 30px; font-size: 16px; font-weight: bold; color: white; background-color: #28a745; border: none; border-radius: 5px; cursor: pointer; margin: 30px auto; display: block; transition: background-color 0.3s; }
-        #load-more-btn.hidden { display: none; }
-        footer { margin-top: 20px; padding: 20px; background-color: #333; color: white; font-size: 14px; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* स्क्रॉलबार को छिपाने के लिए */
+        }
+        #background-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1; /* यह सबसे पीछे रहेगा */
+        }
+        #timer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* हल्का पारदर्शी काला बैकग्राउंड */
+            z-index: 2; /* यह iframe के ऊपर रहेगा */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-family: sans-serif;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        #timer-overlay h1 {
+            font-size: 28px;
+        }
+        #timer-overlay #timer {
+            font-size: 72px;
+            font-weight: bold;
+        }
+        #timer-overlay.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <button id="menu-toggle-btn"><i class="fa-solid fa-bars"></i></button>
 
-    <nav id="main-menu">
-        <button id="close-menu-btn">×</button>
-        <ul>
-            <li><a class="category-link" data-category="all-god">All God Wallpaper</a></li>
-            <li><a class="category-link" data-category="krishna">Krishna Wallpaper</a></li>
-            <li><a class="category-link" data-category="shiv">Shiv Wallpaper</a></li>
-            <li><a class="category-link" data-category="ganesh">Ganesh Wallpaper</a></li>
-            <li><a class="category-link" data-category="hanuman">Hanuman Wallpaper</a></li>
-        </ul>
-    </nav>
+    <!-- यह बैकग्राउंड में आपकी एक्स्ट्रा लिंक वाली साइट दिखाएगा -->
+    <iframe id="background-iframe" src=""></iframe>
 
-    <h1 id="page-title">Best Wallpapers for Android</h1>
-
-    <div id="main-content">
-        <div class="wallpaper-gallery">
-            <!-- वॉलपेपर HTML यहाँ जावास्क्रिप्ट से जनरेट होगा -->
-        </div>
+    <!-- यह टाइमर का ओवरले है -->
+    <div id="timer-overlay">
+        <h1>Your Download will start in...</h1>
+        <div id="timer">10</div>
     </div>
-    
-    <button id="load-more-btn">Load More</button>
-
-    <footer>
-        <p>© 2025 Your Wallpaper Site. All rights reserved.</p>
-    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggleBtn = document.getElementById('menu-toggle-btn');
-            const closeMenuBtn = document.getElementById('close-menu-btn');
-            const mainMenu = document.getElementById('main-menu');
-            menuToggleBtn.addEventListener('click', () => mainMenu.classList.add('menu-open'));
-            closeMenuBtn.addEventListener('click', () => mainMenu.classList.remove('menu-open'));
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const imageUrl = decodeURIComponent(urlParams.get('image'));
+            const redirectUrl = decodeURIComponent(urlParams.get('redirect'));
 
-            const gallery = document.querySelector('.wallpaper-gallery');
-            const loadMoreBtn = document.getElementById('load-more-btn');
-            const pageTitle = document.getElementById('page-title');
-            const itemsPerLoad = 30;
-
-            // --- वॉलपेपर का डेटा (यहाँ आपकी सभी फाइलें और लिंक हैं) ---
-            const wallpaperData = [
-                { id: 'image001', cat: 'krishna all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image002', cat: 'krishna all-god', link: 'https://otieu.com/4/9549432' },
-                { id: 'image003', cat: 'krishna all-god', link: 'https://otieu.com/4/9381063' }, { id: 'image004', cat: 'krishna all-god', link: 'https://otieu.com/4/9549431' },
-                { id: 'image005', cat: 'krishna all-god', link: 'https://otieu.com/4/9549430' }, { id: 'image006', cat: 'krishna all-god', link: 'https://otieu.com/4/9549429' },
-                { id: 'image007', cat: 'krishna all-god', link: 'https://otieu.com/4/9408392' }, { id: 'image008', cat: 'krishna all-god', link: 'https://otieu.com/4/9534884' },
-                { id: 'image009', cat: 'krishna all-god', link: 'https://otieu.com/4/9534885' }, { id: 'image010', cat: 'krishna all-god', link: 'https://otieu.com/4/9534886' },
-                { id: 'image011', cat: 'shiv all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image012', cat: 'shiv all-god', link: 'https://otieu.com/4/9549432' },
-                { id: 'image013', cat: 'shiv all-god', link: 'https://otieu.com/4/9381063' }, { id: 'image014', cat: 'shiv all-god', link: 'https://otieu.com/4/9549431' },
-                { id: 'image015', cat: 'shiv all-god', link: 'https://otieu.com/4/9549430' }, { id: 'image016', cat: 'shiv all-god', link: 'https://otieu.com/4/9549429' },
-                { id: 'image017', cat: 'shiv all-god', link: 'https://otieu.com/4/9408392' }, { id: 'image018', cat: 'shiv all-god', link: 'https://otieu.com/4/9534884' },
-                { id: 'image019', cat: 'shiv all-god', link: 'https://otieu.com/4/9534885' }, { id: 'image020', cat: 'shiv all-god', link: 'https://otieu.com/4/9534886' },
-                { id: 'image021', cat: 'ganesh all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image022', cat: 'ganesh all-god', link: 'https://otieu.com/4/9549432' },
-                { id: 'image023', cat: 'ganesh all-god', link: 'https://otieu.com/4/9381063' }, { id: 'image024', cat: 'ganesh all-god', link: 'https://otieu.com/4/9549431' },
-                { id: 'image025', cat: 'ganesh all-god', link: 'https://otieu.com/4/9549430' }, { id: 'image026', cat: 'hanuman all-god', link: 'https://otieu.com/4/9549429' },
-                { id: 'image027', cat: 'hanuman all-god', link: 'https://otieu.com/4/9408392' }, { id: 'image028', cat: 'hanuman all-god', link: 'https://otieu.com/4/9534884' },
-                { id: 'image029', cat: 'hanuman all-god', link: 'https://otieu.com/4/9534885' }, { id: 'image030', cat: 'hanuman all-god', link: 'https://otieu.com/4/9534886' },
-                { id: 'image031', cat: 'all-god', link: 'https://www.example.com' }, { id: 'image032', cat: 'all-god', link: 'https://www.example.com' },
-                { id: 'image033', cat: 'all-god', link: 'https://www.example.com' }, { id: 'image034', cat: 'all-god', link: 'https://www.example.com' },
-                { id: 'image035', cat: 'all-god', link: 'https://www.example.com' }, { id: 'image036', cat: 'all-god', link: 'https://www.example.com' },
-                { id: 'image037', cat: 'all-god', link: 'https://www.example.com' }, { id: 'image038', cat: 'all-god', link: 'https://www.example.com' },
-                { id: 'image039', cat: 'all-god', link: 'https://www.example.com' }, { id: 'image040', cat: 'all-god', link: 'https://www.example.com' },
-                { id: 'image041', cat: 'all-god', link: 'https://otieu.com/4/9549433' }, { id: 'image042', cat: 'all-god', link: 'https://otieu.com/4/9549432' },
-                { id: 'image043', cat: 'all-god', link: 'https://otieu.com/4/9381063' }, { id: 'image044', cat: 'all-god', link: 'https://otieu.com/4/9549431' },
-                { id: 'image045', cat: 'all-god', link: 'https://otieu.com/4/9549430' }, { id: 'image046', cat: 'all-god', link: 'https://otieu.com/4/9549429' },
-                { id: 'image047', cat: 'all-god', link: 'https://otieu.com/4/9408392' }, { id: 'image048', cat: 'all-god', link: 'https://otieu.com/4/9534884' },
-                { id: 'image049', cat: 'all-god', link: 'https://otieu.com/4/9534885' }, { id: 'image050', cat: 'all-god', link: 'https://otieu.com/4/9534886' }
-            ];
-
-            let allWallpaperElements = [];
-            let activeCategory = 'all-god';
-            let visibleCount = 0;
-
-            function createWallpaperElement(data, iteration) {
-                const uniqueId = `${data.id}-${iteration}`;
-                const imageUrl = `${data.id}.jpg.jpg`;
-                const container = document.createElement('div');
-                container.className = 'wallpaper-container';
-                container.dataset.id = uniqueId;
-                container.dataset.category = data.cat;
-                container.innerHTML = `
-                    <img src="${imageUrl}" alt="Wallpaper" loading="lazy">
-                    <div class="action-buttons">
-                        <button class="like-btn"><i class="fa-regular fa-heart"></i><span class="like-count">0</span></button>
-                        <button class="share-btn"><i class="fa-solid fa-share-nodes"></i></button>
-                        <button class="comment-btn"><i class="fa-regular fa-comment"></i></button>
-                    </div>
-                    <a href="#" class="download-button" data-image-url="${imageUrl}" data-extra-link="${data.link}">Download</a>`;
-                return container;
+            if (!imageUrl || !redirectUrl) {
+                document.getElementById('timer-overlay').innerHTML = '<h1>Error: Invalid Link.</h1>';
+                return;
             }
 
-            function generateWallpapers() {
-                const totalWallpapers = 330;
-                for (let i = 0; i < totalWallpapers; i++) {
-                    const data = wallpaperData[i % wallpaperData.length];
-                    const iteration = Math.floor(i / wallpaperData.length) + 1;
-                    const el = createWallpaperElement(data, iteration);
-                    gallery.appendChild(el);
+            // iframe में एक्स्ट्रा लिंक वाली साइट लोड करें
+            document.getElementById('background-iframe').src = redirectUrl;
+
+            let timeLeft = 10;
+            const timerElement = document.getElementById('timer');
+            const overlay = document.getElementById('timer-overlay');
+
+            const countdown = setInterval(function() {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    // टाइमर खत्म होने पर डाउनलोड शुरू करें और ओवरले को छिपा दें
+                    triggerDownload(imageUrl);
+                    overlay.classList.add('hidden'); // ओवरले छिपा दें
                 }
-                allWallpaperElements = Array.from(gallery.querySelectorAll('.wallpaper-container'));
+            }, 1000);
+
+            function triggerDownload(url) {
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = url.substring(url.lastIndexOf('/') + 1) || 'wallpaper.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             }
-
-            function filterAndDisplayWallpapers() {
-                visibleCount = 0;
-                let itemsShown = 0;
-                const filteredWallpapers = allWallpaperElements.filter(w => w.dataset.category.includes(activeCategory));
-                
-                allWallpaperElements.forEach(w => w.classList.add('hidden'));
-
-                filteredWallpapers.forEach(w => {
-                    if (itemsShown < itemsPerLoad) {
-                        w.classList.remove('hidden');
-                        itemsShown++;
-                    }
-                });
-                
-                visibleCount = itemsShown;
-                loadMoreBtn.classList.toggle('hidden', visibleCount >= filteredWallpapers.length);
-            }
-
-            loadMoreBtn.addEventListener('click', () => {
-                let itemsShown = 0;
-                const filteredWallpapers = allWallpaperElements.filter(w => w.dataset.category.includes(activeCategory));
-
-                filteredWallpapers.forEach(w => {
-                    if (w.classList.contains('hidden') && itemsShown < itemsPerLoad) {
-                        w.classList.remove('hidden');
-                        itemsShown++;
-                    }
-                });
-                
-                visibleCount += itemsShown;
-                loadMoreBtn.classList.toggle('hidden', visibleCount >= filteredWallpapers.length);
-            });
-
-            document.querySelectorAll('.category-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    activeCategory = e.target.dataset.category;
-                    pageTitle.textContent = e.target.textContent;
-                    mainMenu.classList.remove('menu-open');
-                    filterAndDisplayWallpapers();
-                });
-            });
-
-            gallery.addEventListener('click', function(event) {
-                const target = event.target.closest('button, a.download-button');
-                if (!target) return;
-                
-                const container = target.closest('.wallpaper-container');
-                if (!container) return;
-
-                if (target.matches('a.download-button')) {
-                    event.preventDefault();
-                    const imageUrl = target.dataset.imageUrl;
-                    const extraLink = target.dataset.extraLink; // Extra Link को लिया
-                    if (imageUrl) {
-                        const encodedImageUrl = encodeURIComponent(imageUrl);
-                        const encodedExtraLink = encodeURIComponent(extraLink); // Extra Link को भी एन्कोड किया
-                        window.open(`timer.html?image=${encodedImageUrl}&redirect=${encodedExtraLink}`, '_blank');
-                    }
-                }
-                // ... Like, Share, Comment का लॉजिक ...
-            });
-
-            generateWallpapers();
-            filterAndDisplayWallpapers();
-        });
+        };
     </script>
 </body>
 </html>
