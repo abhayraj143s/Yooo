@@ -2,44 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Preparing Your Download</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparing Download...</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f7f6; color: #333; text-align: center; }
-        .container { padding: 40px; background-color: white; border-radius: 12px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); }
-        h1 { font-size: 24px; margin-bottom: 15px; }
-        p { font-size: 18px; margin-bottom: 25px; }
-        #timer { font-size: 48px; font-weight: bold; color: #007bff; }
-        #status-message { margin-top: 20px; font-size: 18px; color: #28a745; font-weight: bold; display: none; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* स्क्रॉलबार को छिपाने के लिए */
+        }
+        #background-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1; /* यह सबसे पीछे रहेगा */
+        }
+        #timer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* हल्का पारदर्शी काला बैकग्राउंड */
+            z-index: 2; /* यह iframe के ऊपर रहेगा */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-family: sans-serif;
+            text-shadow: 2px 2px 4px #000000;
+        }
+        #timer-overlay h1 {
+            font-size: 28px;
+        }
+        #timer-overlay #timer {
+            font-size: 72px;
+            font-weight: bold;
+        }
+        #timer-overlay.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Your Download is Almost Ready!</h1>
-        <p>Your download will begin automatically in:</p>
+
+    <!-- यह बैकग्राउंड में आपकी एक्स्ट्रा लिंक वाली साइट दिखाएगा -->
+    <iframe id="background-iframe" src=""></iframe>
+
+    <!-- यह टाइमर का ओवरले है -->
+    <div id="timer-overlay">
+        <h1>Your Download will start in...</h1>
         <div id="timer">10</div>
-        <p id="status-message">Download Started!</p>
     </div>
+
     <script>
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const imageUrl = decodeURIComponent(urlParams.get('image'));
-            if (!imageUrl) {
-                document.querySelector('.container').innerHTML = '<h1>Error: Invalid download link.</h1>';
+            const redirectUrl = decodeURIComponent(urlParams.get('redirect'));
+
+            if (!imageUrl || !redirectUrl) {
+                document.getElementById('timer-overlay').innerHTML = '<h1>Error: Invalid Link.</h1>';
                 return;
             }
+
+            // iframe में एक्स्ट्रा लिंक वाली साइट लोड करें
+            document.getElementById('background-iframe').src = redirectUrl;
+
             let timeLeft = 10;
             const timerElement = document.getElementById('timer');
-            const statusMessage = document.getElementById('status-message');
+            const overlay = document.getElementById('timer-overlay');
+
             const countdown = setInterval(function() {
                 timeLeft--;
                 timerElement.textContent = timeLeft;
+
                 if (timeLeft <= 0) {
                     clearInterval(countdown);
-                    timerElement.style.display = 'none';
-                    statusMessage.style.display = 'block';
+                    // टाइमर खत्म होने पर डाउनलोड शुरू करें और ओवरले को छिपा दें
                     triggerDownload(imageUrl);
+                    overlay.classList.add('hidden'); // ओवरले छिपा दें
                 }
             }, 1000);
+
             function triggerDownload(url) {
                 const link = document.createElement('a');
                 link.href = url;
